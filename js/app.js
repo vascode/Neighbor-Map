@@ -18,6 +18,12 @@ var places= [
 		'lat': 41.48469,
 		'lng': -81.70306,
 		'desc': 'Market · Ohio City'
+	},
+	{
+		'name': 'Hard Rock Cafe Cleveland',
+		'lat': 41.497942,
+		'lng': -81.693979,
+		'desc': 'American Restaurant and Bar · Downtown Cleveland'
 	}
 ];
 
@@ -26,13 +32,15 @@ function ViewModel(){
 	var self = this;
 	var marker;
 	var markerArray = places;
-	var infoWindow = new google.maps.InfoWindow();
+	var infoWindow = new google.maps.InfoWindow({
+		maxWidth: 200
+	});
 	var map
 
 		// function initMap () {
 	self.initMap = function(){
-		// var mapDiv = document.getElementById('map');
-		var mapDiv = document.querySelector('#map');
+		var mapDiv = document.getElementById('map');
+		// var mapDiv = document.querySelector('#map');
 		//this js can be replaced with jQuery
 		// var mapDiv = $("#map")[0];
 
@@ -41,76 +49,14 @@ function ViewModel(){
 		var mapOptions = {
 			zoom: 15,
 			center: cleveland,
-			disableDefaultUI: true,
-			mapTypeId: google.maps.MapTypeId.TERRAIN
+			// disableDefaultUI: true,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 
 		map = new google.maps.Map(mapDiv, mapOptions);
 
 		// TODO: adds search bars and list view onto map, sets styled map
 	};
-
-		// this.toggleBounce = function() {
-	function toggleBounce(){
-		if (marker.getAnimation() !== null) {
-			marker.setAnimation(null);
-		} else {
-			marker.setAnimation(google.maps.Animation.BOUNCE);
-			setTimeout(function() {
-	    		marker.setAnimation(null);
-	    	}, 700);
-		}
-	}
-
-	// this.getContentString = function(_place){
-	function getContentString(_place){
-		var contentString = '<div id="content">'+ '<div id="siteNotice">'+'</div>'+
-							'<h1 id="firstHeading" class="firstHeading">'+ _place.name +'</h1>'+
-							'<div id="bodyContent">'+
-							'<p><b>Interesting location description</b></p>'+
-							'<p>'+ _place.desc + '<p>' +
-							'</div>'+
-							'</div>';
-    	return contentString;
-	};
-		/*
-	* Function to create Info window for the google map marker
-	* Takes the marker data as a parameter
-	*/
-  	function createInfoWindow(mk, i){
-		/*
-		* Create the DOM element for the marker window
-		* Uses marker data to create Business name, phone number, reviewer's picture, and reviewer's review
-		*/
-		var infoWindowContent = '<div class="info_content">';
-		infoWindowContent += '<h4>' + markerArray[i].name + '</h4>';
-		infoWindowContent += '<p>' + markerArray[i].desc + '</p>';
-
-					// var contentString = '<div id="content">'+ '<div id="siteNotice">'+'</div>'+
-					// 		'<h1 id="firstHeading" class="firstHeading">'+ markerArray[i].name +'</h1>'+
-					// 		'<div id="bodyContent">'+
-					// 		'<p><b>Interesting location description</b></p>'+
-					// 		'<p>'+ markerArray[i].desc + '<p>' +
-					// 		'</div>'+
-					// 		'</div>';
-
-			// var infowindow = new google.maps.InfoWindow({
-			//     content: infoWindowContent
-			// });
-
-
-		/*
-		* Google Map V3 method to set the content of the marker window
-		* Takes above infoWindowContent variable as a parameter
-		*/
-  		infoWindow.setContent(String(infoWindowContent));
-  		console.log(String(infoWindowContent));
-		/*
-		* Google Map V3 method to set the content of the marker window
-		* Takes map and marker data variable as a parameter
-		*/
-  		infoWindow.open(map, mk);
-  	}
 
 
 	self.addMarker = function(){
@@ -120,86 +66,125 @@ function ViewModel(){
 			    position: new google.maps.LatLng(markerArray[i].lat, markerArray[i].lng),
 			    map: map,
 			    // draggable: true,
-			    animation: google.maps.Animation.DROP
+			    animation: google.maps.Animation.DROP,
+			    name: markerArray[i].name,
+			    desc: markerArray[i].desc
 			});
 
-			// var contentString = getContentString(markerArray[i]);
-			// var contentString = '<div id="content">'+ '<div id="siteNotice">'+'</div>'+
-			// 				'<h1 id="firstHeading" class="firstHeading">'+ markerArray[i].name +'</h1>'+
-			// 				'<div id="bodyContent">'+
-			// 				'<p><b>Interesting location description</b></p>'+
-			// 				'<p>'+ markerArray[i].desc + '<p>' +
-			// 				'</div>'+
-			// 				'</div>';
-
-			// var infoWindow = new google.maps.InfoWindow({
-			//     content: contentString
-			// });
-			// var infoWindow = new google.maps.InfoWindow();
-
-			google.maps.event.addListener(marker, 'click', (function(mk, i){
+			google.maps.event.addListener(marker, 'click', (function(mk){
 				return function(){
 		      		// infoWindow.open(map, mk);
-		      		createInfoWindow(mk, i);
-					toggleBounce();
+		      		createInfoWindow(mk);
+					toggleBounce(mk);
 				}
 			})(marker, i));
 		}
-	}
-	/**
- 	 * if this marker has no animation, disable other marker's animation
- 	 * set this marker's animation to bounce
-	 * @param {Object} venueMarker A venue marker object
- 	 * @return {void}
- 	 */
-	function selectedMarkerBounce(venueMarker) {
-		// if this venue marker has no animation
-		if (venueMarker.getAnimation() == null) {
-			// set this marker as selected marker
-			self.selectedMarker(venueMarker);
-			// disable other venue's animation
-			self.topPicks().forEach(function(venue) {
-				venue.marker.setAnimation(null);
-			});
-			// set this marker's aniamtion to bounce
-			venueMarker.setAnimation(google.maps.Animation.BOUNCE);
+	};
+
+	/*
+	* Bounce marker when clicked
+	* @param {Object} _marker: marker on the map for places
+	*/
+	function toggleBounce(_marker){
+		if (_marker.getAnimation() !== null) {
+			_marker.setAnimation(null);
+		} else {
+			_marker.setAnimation(google.maps.Animation.BOUNCE);
+			setTimeout(function() {
+	    		_marker.setAnimation(null);
+	    	}, 700);
 		}
 	}
+
+	/*
+	* Create Info window with text in it for corresponding the google map marker
+	* @param {Object} _marker: marker on the map for places
+	*/
+  	function createInfoWindow(_marker){
+		/*
+		* Create the DOM element for the marker window
+		* Uses marker data to create Business name, phone number, reviewer's picture, and reviewer's review
+		*/
+		var infoWindowContent = '<div class="info_content">';
+		infoWindowContent += '<h4>' + _marker.name  + '</h4>';
+		infoWindowContent += '<p>' + _marker.desc + '</p>';
+
+  		infoWindow.setContent(String(infoWindowContent));
+		/*
+		* Google Map V3 method to set the content of the marker window
+		* Takes map and marker data variable as a parameter
+		*/
+  		infoWindow.open(map, _marker);
+  	}
+
+  	self.initAutocomplete = function(){
+  		// Create the search box and link it to the UI element
+  		var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+        	searchBox.setBounds(map.getBounds());
+        });
+
+        var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // Clear out the old markers.
+          markers.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          markers = [];
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            var icon = {
+              url: place.icon,
+              size: new google.maps.Size(71, 71),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(17, 34),
+              scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            markers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+        });
+
+  	}
+
 	self.initMap();
 	self.addMarker();
+	self.initAutocomplete();
 };
 
 
 /*
-* @description callback function to initialize app when Google Maps Script finishes loading
+* Initialize app when Google Maps Script finishes loading
 */
 function startMap(){
-	// initMap(); // initialize the map
-
 	var viewModel = new ViewModel(); // define then bind viewModel
 	ko.applyBindings(viewModel);
-
-	// viewModel.initMap();
 }
-
-
-    // /**
-    //  * Takes a PlaceResult object and puts a marker on the map at its location.
-    //  * @param {Object} place A PlaceResult object returned from a Google Places
-    //  *   Library request.
-    //  * @return {Object} marker A Google Maps Marker objecte to be placed on the
-    //  *   map.
-    //  */
-    // function createMarker(place) {
-    //     var marker = new google.maps.Marker({
-    //         map: map,
-    //         position: place.geometry.location,
-    //     });
-    //     // When a marker is clicked scroll the corresponding list view element
-    //     // into view and click it.
-    //     google.maps.event.addListener(marker, 'click', function () {
-    //         document.getElementById(place.id).scrollIntoView();
-    //         $('#' + place.id).trigger('click');
-    //     });
-    //     return marker;
-    // }
