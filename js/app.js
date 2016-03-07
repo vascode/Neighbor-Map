@@ -28,10 +28,10 @@ var places= [
 ];
 
 
-function ViewModel(){
+function AppViewModel(){
 	var self = this;
 	var marker;
-	var markerArray = places;
+	var markers = places;
 	var infoWindow = new google.maps.InfoWindow({
 		maxWidth: 200
 	});
@@ -61,14 +61,14 @@ function ViewModel(){
 
 	self.addMarker = function(){
 
-		for (var i=0; i<markerArray.length; i++){
+		for (var i=0; i<markers.length; i++){
 			marker = new google.maps.Marker({
-			    position: new google.maps.LatLng(markerArray[i].lat, markerArray[i].lng),
+			    position: new google.maps.LatLng(markers[i].lat, markers[i].lng),
 			    map: map,
 			    // draggable: true,
 			    animation: google.maps.Animation.DROP,
-			    name: markerArray[i].name,
-			    desc: markerArray[i].desc
+			    name: markers[i].name,
+			    desc: markers[i].desc
 			});
 
 			google.maps.event.addListener(marker, 'click', (function(mk){
@@ -94,7 +94,7 @@ function ViewModel(){
 	    		_marker.setAnimation(null);
 	    	}, 700);
 		}
-	}
+	};
 
 	/*
 	* Create Info window with text in it for corresponding the google map marker
@@ -115,9 +115,9 @@ function ViewModel(){
 		* Takes map and marker data variable as a parameter
 		*/
   		infoWindow.open(map, _marker);
-  	}
+  	};
 
-  	self.initAutocomplete = function(){
+  	self.addSearchBox = function(){
   		// Create the search box and link it to the UI element
   		var input = document.getElementById('pac-input');
         var searchBox = new google.maps.places.SearchBox(input);
@@ -127,6 +127,8 @@ function ViewModel(){
         map.addListener('bounds_changed', function() {
         	searchBox.setBounds(map.getBounds());
         });
+
+        /* TODO: the below will need to be replaced so that fourSqure returns places */
 
         var markers = [];
         // Listen for the event fired when the user selects a prediction and retrieve
@@ -172,12 +174,25 @@ function ViewModel(){
           });
           map.fitBounds(bounds);
         });
+  	};
+
+  	self.addListView = function(){
+  		markers.forEach(function(marker){
+  			var list_item = '<li class="list-item">';
+			list_item += '<h4>' + marker.name  + '</h4>';
+			list_item += '<p>' + marker.desc + '</p></li>';
+
+			$(".list-view").append(list_item);
+  		});
+
+
 
   	}
 
 	self.initMap();
 	self.addMarker();
-	self.initAutocomplete();
+	self.addSearchBox();
+	self.addListView();
 };
 
 
@@ -185,6 +200,6 @@ function ViewModel(){
 * Initialize app when Google Maps Script finishes loading
 */
 function startMap(){
-	var viewModel = new ViewModel(); // define then bind viewModel
-	ko.applyBindings(viewModel);
+	var appViewModel = new AppViewModel(); // define then bind AppViewModel
+	ko.applyBindings(appViewModel);
 }

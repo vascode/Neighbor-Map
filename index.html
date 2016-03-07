@@ -10,8 +10,20 @@
 	</head>
 
 	<body>
-		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+		<!-- Map View -->
 		<div id="map"></div>
+
+		<!-- Search Bar -->
+		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+
+		<!-- Filter within search results -->
+		<form class="filterBox">
+			<input class="filter-bar" placeholder="Filter result by name" autofocus></input>
+			<button class="filter-button" type="submit">ii</button>
+		</form>
+		<!-- List View -->
+		<ul class="list-view"></ul>
+
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-debug.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUfYIBdCGqiAIx6ktdssdK4OuIbfOwgGY&libraries=places&callback=startMap" async defer></script>
