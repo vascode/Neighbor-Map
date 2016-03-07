@@ -1,3 +1,8 @@
+// Constant variables
+// values for FourSquare :
+const CLIENT_ID = "YK2TJ1KXUHD535PWNR3DYUBZD0ML4ANPZD21UAPQZZHSVYVO";
+const CLIENT_SECRET = "OQ1Q4KCH3VZUD0MHUSFX1AYKV3CKO0MUHBP4Q4KBUL5F01PT"
+
 // Model for places
 // TODO : this will be replaced by a function for getting data from fourSqure
 var places= [
@@ -30,12 +35,14 @@ var places= [
 
 function AppViewModel(){
 	var self = this;
-	var marker;
-	var markers = places;
+	var marker;	// single marker
+	var markers = places;	//array for collection of marker
 	var infoWindow = new google.maps.InfoWindow({
 		maxWidth: 200
 	});
-	var map
+	var map;	// object that will be created from Map class
+	var bound;	// object that will be created from LatLngBounds class (represents a rectangle in geographical coordinates)
+	var service;	// object that will be created from PlacesService class (to search for places and retrieve details about a place)
 
 		// function initMap () {
 	self.initMap = function(){
@@ -49,7 +56,7 @@ function AppViewModel(){
 		var mapOptions = {
 			zoom: 15,
 			center: cleveland,
-			// disableDefaultUI: true,
+			disableDefaultUI: true,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 
