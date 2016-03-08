@@ -50,12 +50,12 @@ var Venue = function(item){
 	this.lat = item.venue.location.lat;	//latitude
 	this.lng = item.venue.location.lng;	//longitude
 	this.address = item.venue.location.address + ', ' + item.venue.location.city + ', ' + item.venue.location.postalCode;
-	this.formattedAddress = item.venue.location.formattedAddress;
+	// this.formattedAddress = item.venue.location.formattedAddress;
 	this.category = item.venue.categories[0].name;
 	this.formattedPhone = item.venue.contact.formattedPhone;
 	this.url = item.venue.url
 	// this.hours = item.venue.hours.status;
-	this.isOpen = this.getIsOpen(this);
+	// this.isOpen = this.getIsOpen(this);
 	// this.price = item.venue.price.tier;	//returns 1:"Cheap", 2:"Moderate", 3:"Expensive", 4:"Very expensive"
 	this.price$ = this.getPrice$(item.venue); //returns 1:"Cheap", 2:"Moderate", 3:"Expensive", 4:"Very expensive"
 	// console.log(item.venue.price.tier);
@@ -314,7 +314,8 @@ function AppViewModel(){
 	*/
   	function getNeighborhoodPlaces(place){
   		infoWindow = new google.maps.InfoWindow({
-  			maxWidth: 250
+  			maxWidth: 250,
+  			// content: "<div class='venue-infoWindow'></div>"
   		});
   		placeLatitude = place.geometry.location.lat();
   		placeLongitude = place.geometry.location.lng();
@@ -419,8 +420,9 @@ function AppViewModel(){
   							+ "<div class='venue-category'>" + venueItem.category
  								+ (venueItem.price$=="N/A" ?  '</div>' : "<span class='venue-price'>" + venueItem.price$ + "</span></div>")
 
-  							+ "<div class='venue-address'>" + venueItem.address + "</div>"
-  							+ (venueItem.formattedPhone == undefined ? '': "<div class='venue-phone'>" + venueItem.formattedPhone + "</div>")
+  							+ "<div class='venue-address'><i class='glyphicon glyphicon-home'></i> " + venueItem.address + "</div>"
+  							+ (venueItem.formattedPhone == undefined ? '': "<div class='venue-phone'><i class='glyphicon glyphicon-earphone'></i> "  + venueItem.formattedPhone + "</div>")
+  							+ "</div>"
 
   		return contentString;
   	};
