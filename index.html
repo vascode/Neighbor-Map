@@ -20,7 +20,7 @@
 		<!-- <input data-bind="value: searchTerm" id="pac-input" class="controls" type="text" placeholder="Set location to search popular places"> -->
 
 		<!-- Filter within search results -->
-		<form class="filterBox">
+		<form class="filterBox" data-bind="submit: filter">
 			<input data-bind="value: keyword" class="filter-bar" placeholder="Filter below place list by name or type" autofocus></input>
 			<button class="filter-button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 		</form>

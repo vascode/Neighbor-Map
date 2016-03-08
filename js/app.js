@@ -130,15 +130,20 @@ function AppViewModel(){
 
   	self.venueArray = ko.observableArray('');	// Recommended places from foursquare
   	self.filteredList = ko.observableArray(self.venueArray());	// Filtered list by filtering
-  	// self.filteredPlaces = ko.computed(function(){
-  	// 	return self.venueArray.filter(function(venue){
-  	// 		return venue.isInFilteredList();
-
-  	// 	})
-  	// })
   	self.searchTerm = ko.observable('');	// words to be used for search
   	self.keyword = ko.observable('');	//keyword to filter list view
 
+	// update the neighborhood
+	// self.computedNeighborhood = ko.computed(function() {
+	// 	if (self.neighborhood() != '') {
+	// 		if (venueMarkers.length > 0) {
+	// 			removeVenueMarkers();
+	// 		}
+	// 		removeNeighborhoodMarker();
+	// 		requestNeighborhood(self.neighborhood());
+	// 		self.keyword('');
+	// 	}
+	// });
 
   	// When list item is clicked, trigger click event
   	self.gotoMarker = function(venueItem){
@@ -148,8 +153,8 @@ function AppViewModel(){
   				google.maps.event.trigger(marker, 'click');
   				map.panTo(marker.position);
   			}
-  		})
-  	}
+  		});
+  	};
 
   	/*
   	* Display venue info in list view with filtering
@@ -168,6 +173,29 @@ function AppViewModel(){
   		})
   		self.filteredList(listArray);
   	});
+
+	// update map markers based on search keyword
+	self.displayMarkers = ko.computed(function() {
+		var keyword = self.keyword().toLowerCase()
+
+		markerArray.forEach(function(marker){
+			if(marker.map === null){
+				marker.setMap(map);
+			}
+			if(marker.title.toLowerCase().indexOf(keyword) === -1 &&
+				marker.category.toLowerCase().indexOf(keyword) === -1){
+					marker.setMap(null);
+			}
+		});
+	});
+
+	// When submit is commited for filter box, this function is called
+	self.filter = function(){
+		console.log('hi');
+		// self.displayVenueInList();
+		// self.displayMarkers();
+	}
+
 
 	// fit map height to window size
 	self.mapSize = ko.computed(function() {
@@ -274,6 +302,7 @@ function AppViewModel(){
   				self.venueArray().forEach(function(venueItem){
   					setVenueMarker(venueItem);
   				});
+  				console.log(markerArray);
 
   				//Set bounds according to suggestedBounds from foursqaure
   				var suggestedBounds = data.response.suggestedBounds;
@@ -303,6 +332,7 @@ function AppViewModel(){
 		    position: venuePosition,
 		    map: map,
 		    title: venueItem.name,
+		    category: venueItem.category,
 		    animation: google.maps.Animation.DROP,
 		});
 		markerArray.push(venueMarker);
@@ -311,14 +341,11 @@ function AppViewModel(){
 			infoWindow.setContent(String(infoWindowContent));
 			infoWindow.open(map, venueMarker);
 			toggleBounce(venueMarker);
-			// self.filteredList().forEach(function(){
-
-			// })
 		});
 
-		// Pass marker information to venue
-		venueItem.marker = venueMarker;
   	};
+
+
 
   		/*
 	* Bounce marker when clicked
