@@ -120,18 +120,62 @@ function AppViewModel(){
 	// 	maxWidth: 100
 	// });
 	var map;	// object that will be created from Map class
-	var bound;	// object that will be created from LatLngBounds class (represents a rectangle in geographical coordinates)
+	var mapBounds;	// object that will be created from LatLngBounds class (represents a rectangle in geographical coordinates)
 	var service;	// object that will be created from PlacesService class (to search for places and retrieve details about a place)
 
 	var defaultNeighborhood = "cleveland ohio";	//for entry in Search Box
 	var placeLatitude;
   	var placeLongitude;
+  	var markerArray = [];
 
-  	self.venueArray = ko.observableArray('');	// recommended places from foursquare
+  	self.venueArray = ko.observableArray('');	// Recommended places from foursquare
+  	self.filteredList = ko.observableArray(self.venueArray());	// Filtered list by filtering
+  	// self.filteredPlaces = ko.computed(function(){
+  	// 	return self.venueArray.filter(function(venue){
+  	// 		return venue.isInFilteredList();
+
+  	// 	})
+  	// })
   	self.searchTerm = ko.observable('');	// words to be used for search
+  	self.keyword = ko.observable('');	//keyword to filter list view
 
 
-	self.initMap = function(){
+  	// When list item is clicked, trigger click event
+  	self.gotoMarker = function(venueItem){
+  		var venueName = venueItem.name.toLowerCase();
+  		markerArray.forEach(function(marker){
+  			if(marker.title.toLowerCase() == venueName){
+  				google.maps.event.trigger(marker, 'click');
+  				map.panTo(marker.position);
+  			}
+  		})
+  	}
+
+  	/*
+  	* Display venue info in list view with filtering
+  	* @param {Object} venueItem: venue data from foursqare
+  	* return {void}
+  	*/
+  	self.displayVenueInList = ko.computed(function(){
+  		var venue;
+  		var listArray=[];
+  		var keyword = self.keyword().toLowerCase();
+  		self.venueArray().forEach(function(venueItem){
+  			if(venueItem.name.toLowerCase().indexOf(keyword) != -1 ||
+  				venueItem.category.toLowerCase().indexOf(keyword) != -1){
+  				listArray.push(venueItem);
+  			}
+  		})
+  		self.filteredList(listArray);
+  	});
+
+	// fit map height to window size
+	self.mapSize = ko.computed(function() {
+		$("#map").height($(window).height());
+	});
+
+
+	function initMap(){
 		var mapDiv = document.getElementById('map');
 		// var mapDiv = document.querySelector('#map');
 		//this js can be replaced with jQuery
@@ -151,135 +195,13 @@ function AppViewModel(){
 		// TODO: adds search bars and list view onto map, sets styled map
 	};
 
-	// Add marker from database
-	// self.addMarker = function(){
-
-	// 	for (var i=0; i<markers.length; i++){
-	// 		marker = new google.maps.Marker({
-	// 		    position: new google.maps.LatLng(markers[i].lat, markers[i].lng),
-	// 		    map: map,
-	// 		    // draggable: true,
-	// 		    animation: google.maps.Animation.DROP,
-	// 		    name: markers[i].name,
-	// 		    desc: markers[i].desc
-	// 		});
-
-	// 		google.maps.event.addListener(marker, 'click', (function(mk){
-	// 			return function(){
-	// 	      		// infoWindow.open(map, mk);
-	// 	      		createInfoWindow(mk);
-	// 				toggleBounce(mk);
-	// 			}
-	// 		})(marker, i));
-	// 	}
-	// };
-
-	/*
-	* Create Info window with text in it for corresponding the google map marker
-	* @param {Object} marker: A marker on the map for places
-	*/
-  // 	function createInfoWindow(marker){
-		// /*
-		// * Create the DOM element for the marker window
-		// * Uses marker data to create Business name, phone number, reviewer's picture, and reviewer's review
-		// */
-		// var infoWindowContent = '<div class="info_content">';
-		// infoWindowContent += '<h4>' + marker.name  + '</h4>';
-		// infoWindowContent += '<p>' + marker.desc + '</p>';
-
-  // 		infoWindow.setContent(String(infoWindowContent));
-		// /*
-		// * Google Map V3 method to set the content of the marker window
-		// * Takes map and marker data variable as a parameter
-		// */
-  // 		infoWindow.open(map, marker);
-  // 	};
-
-  	// Add SerchBox
-  	self.addSearchBox = function(){
-  		// Create the search box with auto complete feature and link it to the UI element
-  		// BUT search for city only not the restaurant name and etc.
-  		var options = {
-			types: ['(cities)'],
-			// componentRestrictions: {country: "us"}
-		};
-
-  		var input = document.getElementById('pac-input');
-        var searchBox = new google.maps.places.Autocomplete(input, options);
-
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-        // Bias the SearchBox results towards current map's viewport.
-        map.addListener('bounds_changed', function() {
-        	searchBox.setBounds(map.getBounds());
-        });
-
-        /* TODO: the below will need to be replaced so that fourSqure returns places */
-
-        var markers = [];
-        // Listen for the event fired when the user selects a prediction and retrieve
-        // more details for that place.
-        // searchBox.addListener('places_changed', function() {
-        //   var places = searchBox.getPlaces();
-
-        //   if (places.length == 0) {
-        //     return;
-        //   }
-
-        //   // Clear out the old markers.
-        //   markers.forEach(function(marker) {
-        //     marker.setMap(null);
-        //   });
-        //   markers = [];
-
-        //   // For each place, get the icon, name and location.
-        //   var bounds = new google.maps.LatLngBounds();
-        //   places.forEach(function(place) {
-        //     var icon = {
-        //       url: place.icon,
-        //       size: new google.maps.Size(71, 71),
-        //       origin: new google.maps.Point(0, 0),
-        //       anchor: new google.maps.Point(17, 34),
-        //       scaledSize: new google.maps.Size(25, 25)
-        //     };
-
-        //     // Create a marker for each place.
-        //     markers.push(new google.maps.Marker({
-        //       map: map,
-        //       icon: icon,
-        //       title: place.name,
-        //       position: place.geometry.location
-        //     }));
-
-        //     if (place.geometry.viewport) {
-        //       // Only geocodes have viewport.
-        //       bounds.union(place.geometry.viewport);
-        //     } else {
-        //       bounds.extend(place.geometry.location);
-        //     }
-        //   });
-        //   map.fitBounds(bounds);
-        // });
-  	};
-
-  	// Add List View
-  	self.addListView = function(){
-  		markers.forEach(function(marker){
-  			var list_item = '<li class="list-item">';
-			list_item += '<h4>' + marker.name  + '</h4>';
-			list_item += '<p>' + marker.desc + '</p></li>';
-
-			$(".list-view").append(list_item);
-  		});
-  	};
-
   	// =============================== Places for recommended to be shown on map =========================================
 
   	/*
   	* Initialize Neighborhood (point of interest for city)
   	* @param {string} neighborbhood: A neighborhood location retrieved from user input
   	*/
-  	self.initNeighborhood = function(neighborhood){
+  	function initNeighborhood(neighborhood){
 
   		var textSearchRequest = {
   			query: neighborhood	// The request's query term
@@ -302,7 +224,7 @@ function AppViewModel(){
   			getNeighborhoodPlaces(placeResult[0]);
   		}
   		else {
-  			$(".list-view").html("<h2>The search results contains a valid data. Reload the page.<h2>")
+  			$(".list-view").html("<h2>The search results contains a valid data. Reload the page.<h2>");
   			return;
   		}
   	};
@@ -352,6 +274,16 @@ function AppViewModel(){
   				self.venueArray().forEach(function(venueItem){
   					setVenueMarker(venueItem);
   				});
+
+  				//Set bounds according to suggestedBounds from foursqaure
+  				var suggestedBounds = data.response.suggestedBounds;
+  				// console.log(suggestedBounds);
+  				if (suggestedBounds != undefined){
+  					mapBounds = new google.maps.LatLngBounds(
+  						new google.maps.LatLng(suggestedBounds.sw.lat, suggestedBounds.sw.lng),
+  						new google.maps.LatLng(suggestedBounds.ne.lat, suggestedBounds.ne.lng));
+  					map.fitBounds(mapBounds);
+  				}
   			},
   			complete: function(data) {
   				if (self.venueArray().length == 0)
@@ -373,12 +305,19 @@ function AppViewModel(){
 		    title: venueItem.name,
 		    animation: google.maps.Animation.DROP,
 		});
+		markerArray.push(venueMarker);
 
 		google.maps.event.addListener(venueMarker, 'click', function(){
 			infoWindow.setContent(String(infoWindowContent));
 			infoWindow.open(map, venueMarker);
 			toggleBounce(venueMarker);
+			// self.filteredList().forEach(function(){
+
+			// })
 		});
+
+		// Pass marker information to venue
+		venueItem.marker = venueMarker;
   	};
 
   		/*
@@ -412,8 +351,6 @@ function AppViewModel(){
   		* phone
   		*/
 
-
-
   		var contentString ="<div class='venue-infoWindow'>"
   							+ "<div class='venue-name'>" + "<a href ='" + venueItem.url + "' target='_blank'>" + venueItem.name + "</a>"
   								+ "<span class='venue-rating' style='background-color:" + venueItem.ratingColor + "'>" + venueItem.rating + "</span></div>"
@@ -427,15 +364,33 @@ function AppViewModel(){
   		return contentString;
   	};
 
-	self.initMap();
-	//self.addMarker();
-	self.addSearchBox();
-	// self.addListView();
+  	 // Add List View
+  	function initListView(venueArray){
+  		venueArray.forEach(function(venue){
+  			displayVenueInList(venue);
+  		})
 
+  		markers.forEach(function(marker){
+  			var list_item = '<li class="list-item">';
+			list_item += '<h4>' + marker.name  + '</h4>';
+			list_item += '<p>' + marker.desc + '</p></li>';
 
-	self.initNeighborhood(defaultNeighborhood);
-	// getFoursquareData();
+			$(".list-view").append(list_item);
+  		});
+  	};
 
+  	// When page resizes, map bounds is updated
+  	window.addEventListener("resize", function(e){
+  		console.log('resize event');
+  		map.fitBounds(mapBounds);
+  		$("#map").height($(window).height());
+  	})
+
+	initMap();
+	// addSearchBox();
+	initNeighborhood(defaultNeighborhood);
+	// initListView();
+	// self.displayVenueInList();
 };
 
 

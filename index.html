@@ -17,15 +17,24 @@
 		<div id="map"></div>
 
 		<!-- Search Bar -->
-		<input data-bind="value: searchTerm" id="pac-input" class="controls" type="text" placeholder="Set location to search popular places">
+		<!-- <input data-bind="value: searchTerm" id="pac-input" class="controls" type="text" placeholder="Set location to search popular places"> -->
 
 		<!-- Filter within search results -->
 		<form class="filterBox">
-			<input class="filter-bar" placeholder="Filter below place list by name" autofocus></input>
+			<input data-bind="value: keyword" class="filter-bar" placeholder="Filter below place list by name or type" autofocus></input>
 			<button class="filter-button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 		</form>
 		<!-- List View -->
-		<ul class="list-view"></ul>
+		<div id="infolistBox">
+			<ul class="list-view" data-bind="foreach: filteredList">
+				<li data-bind="click: $root.gotoMarker">
+					<p class="list-name"><span data-bind="text: name"></span></p>
+					<p class="list-category"><span data-bind="text: category"></span></p>
+					<p class="list-address"><span data-bind="text:address"></span></p>
+					<p class="list-phone"><span data-bind="text: formattedPhone"></span></p>
+				</li>
+			</ul>
+		</div>
 
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-debug.js"></script>
