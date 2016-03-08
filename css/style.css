@@ -163,3 +163,44 @@
 .list-toggle:hover {
   background: #0062ff;
 }
+
+.venue-infowindow .venue-name {
+	font-family: 'Poiret One', cursive;
+	font-size:16px;
+	font-weight: 400;
+	margin: 0 0 5px 0;
+	font-weight: bold;
+}
+
+.venue-category {
+	font-weight: bold;
+}
+
+.venue-rating {
+	margin: 0 0 0 10px;
+	min-width: 10px;
+	padding: 3px 7px;
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 1;
+	text-align: center;
+	border-radius: 10px
+}
+
+.venue-price {
+	margin: 0 0 0 10px;
+	min-width: 8px;
+	padding: 2px 7px;
+	font-size: 10px;
+	font-weight: 700;
+	color: #fff;
+	line-height: 1;
+	white-space: nowrap;
+	text-align: center;
+	background-color: #777;
+	border-radius: 9px
+}
+
+.venue-address {
+	margin: 4px 0;
+}
