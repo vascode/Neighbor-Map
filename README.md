@@ -6,8 +6,9 @@
 Information on this app: 
 - Default location is cleveland
 - Get data about popular places from Foursquare and show them as markers and list on the side
-- When items in list is clicked, corresponding marker is clicked and focus. 
-- Filter box allow you to filter list of places by name or type.
+- When items in list is clicked, corresponding marker is clicked and focus
+- Filter box allow you to filter list of places by name or type
+- Map gets updated when resizing browswer window
 - Info Windows has following information: 
 -- name of palce
 -- catetory(type)
@@ -15,6 +16,13 @@ Information on this app:
 -- phone number (if available)
 -- rating
 -- price (if available)
+
+<h3>TODO:</h3>
+-- Remove unnecessary functions and organize comments better than now
+-- Add "Search Bar" to change location of the map
+-- Implement street view for point of interest
+-- When a user clicks outside of info Window pop-up, it disappears (without clicking 'x' on the right top corner of the pop-up)
+-- Get photos from thirdparty API(e.g. instagram)
 
 
 <h2>References:</h2>
