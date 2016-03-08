@@ -1,4 +1,4 @@
-<!DOCYPTE html>
+<!DOCTYPE html>
 <html>
 	<head>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
@@ -21,7 +21,7 @@
 
 		<!-- Filter within search results -->
 		<form class="filterBox" data-bind="submit: filter">
-			<input data-bind="value: keyword" class="filter-bar" placeholder="Filter below place list by name or type" autofocus></input>
+			<input data-bind="value: keyword" class="filter-bar" placeholder="Filter below place list by name or type" autofocus>
 			<button class="filter-button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 		</form>
 		<!-- List View -->
@@ -34,6 +34,8 @@
 					<p class="list-phone"><span data-bind="text: formattedPhone"></span></p>
 				</li>
 			</ul>
+			<div class="loading">Loading...</div>
+			<div class="no-filtered-list" data-bind="visible: $root.filteredList().length === 0">No matching result</div>
 		</div>
 
 

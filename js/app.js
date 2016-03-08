@@ -1,40 +1,9 @@
-// Paramters for FourSquare :
-const CLIENT_ID = "YK2TJ1KXUHD535PWNR3DYUBZD0ML4ANPZD21UAPQZZHSVYVO";
-const CLIENT_SECRET = "OQ1Q4KCH3VZUD0MHUSFX1AYKV3CKO0MUHBP4Q4KBUL5F01PT"
-const FOURSQURE_ID = CLIENT_ID + CLIENT_SECRET;
-const V_PARAMETER = "&v=20160307"
-
-
-
-// Model for places
-// TODO : this will be replaced by a function for getting data from fourSqure
-
-var places= [
-	{
-		'name': "Bar Louie",
-		'lat': 41.50094,
-		'lng': -81.69586,
-		'desc': "Restaurant, Bar, and Cocktail Bar · Downtown Cleveland"
-	},
-	{
-		'name': "House of Blues",
-		'lat': 41.49917,
-		'lng': -81.69066,
-		'desc': 'Music Venue and Bar · Downtown Cleveland'
-	},
-	{
-		'name': "West Side Market",
-		'lat': 41.48469,
-		'lng': -81.70306,
-		'desc': 'Market · Ohio City'
-	},
-	{
-		'name': 'Hard Rock Cafe Cleveland',
-		'lat': 41.497942,
-		'lng': -81.693979,
-		'desc': 'American Restaurant and Bar · Downtown Cleveland'
-	}
-];
+ "use strict";
+ // Paramters for FourSquare :
+var CLIENT_ID = "YK2TJ1KXUHD535PWNR3DYUBZD0ML4ANPZD21UAPQZZHSVYVO";
+var CLIENT_SECRET = "OQ1Q4KCH3VZUD0MHUSFX1AYKV3CKO0MUHBP4Q4KBUL5F01PT"
+var FOURSQURE_ID = CLIENT_ID + CLIENT_SECRET;
+var V_PARAMETER = "&v=20160307";
 
 /*
 * Place model. Upon recieving data from Foursquare, this constructor will be used to create data in format.
@@ -53,7 +22,7 @@ var Venue = function(item){
 	// this.formattedAddress = item.venue.location.formattedAddress;
 	this.category = item.venue.categories[0].name;
 	this.formattedPhone = item.venue.contact.formattedPhone;
-	this.url = item.venue.url
+	this.url = item.venue.url;
 	// this.hours = item.venue.hours.status;
 	// this.isOpen = this.getIsOpen(this);
 	// this.price = item.venue.price.tier;	//returns 1:"Cheap", 2:"Moderate", 3:"Expensive", 4:"Very expensive"
@@ -62,7 +31,7 @@ var Venue = function(item){
 	// TOOD: get photo
 	// this.photo = this.getPhoto(this.id);
 
-}
+};
 
 Venue.prototype = {
 	getPhoto: function(id){
@@ -115,7 +84,7 @@ Venue.prototype = {
 
 function AppViewModel(){
 	var self = this;
-	// var infoWindow;
+	var infoWindow;
 	// var infoWindow = new google.maps.InfoWindow({
 	// 	maxWidth: 100
 	// });
@@ -162,7 +131,6 @@ function AppViewModel(){
   	* return {void}
   	*/
   	self.displayVenueInList = ko.computed(function(){
-  		var venue;
   		var listArray=[];
   		var keyword = self.keyword().toLowerCase();
   		self.venueArray().forEach(function(venueItem){
@@ -170,13 +138,17 @@ function AppViewModel(){
   				venueItem.category.toLowerCase().indexOf(keyword) != -1){
   				listArray.push(venueItem);
   			}
-  		})
+  		});
   		self.filteredList(listArray);
+  		// console.log(self.filteredList());
+  		// if(self.filteredList().length === 0){
+  		// 	$(".list-view").html("No matching result!");
+  		// }
   	});
 
 	// update map markers based on search keyword
 	self.displayMarkers = ko.computed(function() {
-		var keyword = self.keyword().toLowerCase()
+		var keyword = self.keyword().toLowerCase();
 
 		markerArray.forEach(function(marker){
 			if(marker.map === null){
@@ -191,10 +163,9 @@ function AppViewModel(){
 
 	// When submit is commited for filter box, this function is called
 	self.filter = function(){
-		console.log('hi');
 		// self.displayVenueInList();
 		// self.displayMarkers();
-	}
+	};
 
 
 	// fit map height to window size
@@ -221,7 +192,7 @@ function AppViewModel(){
 		map = new google.maps.Map(mapDiv, mapOptions);
 
 		// TODO: adds search bars and list view onto map, sets styled map
-	};
+	}
 
   	// =============================== Places for recommended to be shown on map =========================================
 
@@ -239,7 +210,7 @@ function AppViewModel(){
   		service = new google.maps.places.PlacesService(map);
   		// Retrieves a list of places based on a query string (textSearchRequest) and runs callback function
   		service.textSearch(textSearchRequest, initNeighborhoodCallback);
-  	};
+  	}
 
   	/*
   	* See if returned data from search has valid result
@@ -255,7 +226,7 @@ function AppViewModel(){
   			$(".list-view").html("<h2>The search results contains a valid data. Reload the page.<h2>");
   			return;
   		}
-  	};
+  	}
 
   	/**
   	* Get information about neighborhood places from FourSquare and show them on the google map as marker
@@ -273,7 +244,7 @@ function AppViewModel(){
   		map.setCenter(newNeighborhood);
 
   		getFoursquareData();
-  	};
+  	}
 
   	/*
   	* Get deailts for popular places from Foursquare
@@ -283,7 +254,7 @@ function AppViewModel(){
 
 
   		// // Create URL to send asynchronous HTTP (Ajax) request
-  		var foursquareBaseURL = "https://api.foursquare.com/v2/venues/explore?"
+  		var foursquareBaseURL = "https://api.foursquare.com/v2/venues/explore?";
   		var forusquareID = "client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET;
   		var coordinate = "&ll=" + placeLatitude +',' + placeLongitude;
   		var query = "&query="  + self.searchTerm();
@@ -302,12 +273,12 @@ function AppViewModel(){
   				self.venueArray().forEach(function(venueItem){
   					setVenueMarker(venueItem);
   				});
-  				console.log(markerArray);
+  				// console.log(markerArray);
 
   				//Set bounds according to suggestedBounds from foursqaure
   				var suggestedBounds = data.response.suggestedBounds;
   				// console.log(suggestedBounds);
-  				if (suggestedBounds != undefined){
+  				if (suggestedBounds !== undefined){
   					mapBounds = new google.maps.LatLngBounds(
   						new google.maps.LatLng(suggestedBounds.sw.lat, suggestedBounds.sw.lng),
   						new google.maps.LatLng(suggestedBounds.ne.lat, suggestedBounds.ne.lng));
@@ -315,7 +286,7 @@ function AppViewModel(){
   				}
   			},
   			complete: function(data) {
-  				if (self.venueArray().length == 0)
+  				if (self.venueArray().length === 0)
   					$(".list-view").html('<h2 style=color:green>No result found. Search with different keywords<h2>');
   			},
   			error: function(data) {
@@ -342,10 +313,7 @@ function AppViewModel(){
 			infoWindow.open(map, venueMarker);
 			toggleBounce(venueMarker);
 		});
-
-  	};
-
-
+  	}
 
   		/*
 	* Bounce marker when clicked
@@ -360,8 +328,7 @@ function AppViewModel(){
 	    		marker.setAnimation(null);
 	    	}, 700);
 		}
-	};
-
+	}
 
   	/*
   	* prepare contents in info window
@@ -378,32 +345,16 @@ function AppViewModel(){
   		* phone
   		*/
 
-  		var contentString ="<div class='venue-infoWindow'>"
-  							+ "<div class='venue-name'>" + "<a href ='" + venueItem.url + "' target='_blank'>" + venueItem.name + "</a>"
-  								+ "<span class='venue-rating' style='background-color:" + venueItem.ratingColor + "'>" + venueItem.rating + "</span></div>"
-  							+ "<div class='venue-category'>" + venueItem.category
- 								+ (venueItem.price$=="N/A" ?  '</div>' : "<span class='venue-price'>" + venueItem.price$ + "</span></div>")
-
-  							+ "<div class='venue-address'><i class='glyphicon glyphicon-home'></i> " + venueItem.address + "</div>"
-  							+ (venueItem.formattedPhone == undefined ? '': "<div class='venue-phone'><i class='glyphicon glyphicon-earphone'></i> "  + venueItem.formattedPhone + "</div>")
-  							+ "</div>"
+  		var contentString ="<div class='venue-infoWindow'>" +
+  							 "<div class='venue-name'>" + "<a href ='" + venueItem.url + "' target='_blank'>" + venueItem.name + "</a>" +
+  							 "<span class='venue-rating' style='background-color: #" + venueItem.ratingColor + "'>" + venueItem.rating + "</span></div>" +
+  							 "<div class='venue-category'>" + venueItem.category +
+ 							 (venueItem.price$=="N/A" ?  '</div>' : "<span class='venue-price'>" + venueItem.price$ + "</span></div>") +
+  							 "<div class='venue-address'><i class='glyphicon glyphicon-home'></i> " + venueItem.address + "</div>" +
+  							 (venueItem.formattedPhone === undefined ? '': "<div class='venue-phone'><i class='glyphicon glyphicon-earphone'></i> "  + venueItem.formattedPhone + "</div>") +
+  							 "</div>";
 
   		return contentString;
-  	};
-
-  	 // Add List View
-  	function initListView(venueArray){
-  		venueArray.forEach(function(venue){
-  			displayVenueInList(venue);
-  		})
-
-  		markers.forEach(function(marker){
-  			var list_item = '<li class="list-item">';
-			list_item += '<h4>' + marker.name  + '</h4>';
-			list_item += '<p>' + marker.desc + '</p></li>';
-
-			$(".list-view").append(list_item);
-  		});
   	};
 
   	// When page resizes, map bounds is updated
@@ -411,20 +362,22 @@ function AppViewModel(){
   		console.log('resize event');
   		map.fitBounds(mapBounds);
   		$("#map").height($(window).height());
-  	})
+  	});
 
 	initMap();
-	// addSearchBox();
 	initNeighborhood(defaultNeighborhood);
-	// initListView();
-	// self.displayVenueInList();
-};
+}
 
 
 /*
 * Initialize app when Google Maps Script finishes loading
 */
 function startMap(){
+
 	var appViewModel = new AppViewModel(); // define then bind AppViewModel
 	ko.applyBindings(appViewModel);
+	setTimeout(function(){
+		$(".loading").css("display", "none");
+	}, 2000);
+
 }
