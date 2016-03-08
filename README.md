@@ -18,12 +18,11 @@ Information on this app:
 -- price (if available)
 
 <h3>TODO:</h3>
--- Remove unnecessary functions and organize comments better than now
--- Add "Search Bar" to change location of the map
--- Implement street view for point of interest
--- When a user clicks outside of info Window pop-up, it disappears (without clicking 'x' on the right top corner of the pop-up)
--- Get photos from thirdparty API(e.g. instagram)
-
+- Remove unnecessary functions and organize comments better than now
+- Add "Search Bar" to change location of the map
+- Implement street view for point of interest
+- When a user clicks outside of info Window pop-up, it disappears (without clicking 'x' on the right top corner of the pop-up)
+- Get photos from thirdparty API(e.g. instagram)
 
 <h2>References:</h2>
 <ul>
