@@ -1,7 +1,7 @@
  "use strict";
  // Paramters for FourSquare :
 var CLIENT_ID = "YK2TJ1KXUHD535PWNR3DYUBZD0ML4ANPZD21UAPQZZHSVYVO";
-var CLIENT_SECRET = "OQ1Q4KCH3VZUD0MHUSFX1AYKV3CKO0MUHBP4Q4KBUL5F01PT"
+var CLIENT_SECRET = "OQ1Q4KCH3VZUD0MHUSFX1AYKV3CKO0MUHBP4Q4KBUL5F01PT";
 var FOURSQURE_ID = CLIENT_ID + CLIENT_SECRET;
 var V_PARAMETER = "&v=20160307";
 
@@ -355,7 +355,7 @@ function AppViewModel(){
   							 "</div>";
 
   		return contentString;
-  	};
+  	}
 
   	// When page resizes, map bounds is updated
   	window.addEventListener("resize", function(e){
@@ -378,6 +378,6 @@ function startMap(){
 	ko.applyBindings(appViewModel);
 	setTimeout(function(){
 		$(".loading").css("display", "none");
-	}, 2000);
+	}, 2500);
 
 }

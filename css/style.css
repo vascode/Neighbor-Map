@@ -74,25 +74,25 @@ body, html {
 }
 
 .filterBox {
-  z-index: 10;
-  position: fixed;
-  right: 25px;
-  top: 25px;
-  height: 35px;
-  width: 350px;
+	z-index: 10;
+	position: fixed;
+	right: 80px;
+	top: 25px;
+	height: 35px;
+	width: 250px;
 }
 
 .filter-bar {
-  position: absolute;
-  left: 0;
-  height: 100%;
-  width: 80%;
-  font-size: 16px;
-  padding: 5px 5px 5px 10px;
-  border-radius: 5px 0 0 5px;
-  outline: 0;
-  border: 1px solid #1c5380;
-  font-weight: 200;
+	position: absolute;
+	left: 0;
+	height: 100%;
+	width: 80%;
+	font-size: 16px;
+	padding: 5px 5px 5px 10px;
+	border-radius: 5px 0 0 5px;
+	outline: 0;
+	border: 1px solid #1c5380;
+	font-weight: 200;
 }
 
 .filter-bar:focus {
@@ -170,26 +170,26 @@ body, html {
 }
 
 #infolistBox {
-  width: 500px;
-  padding-left: 2px;
-  padding-right: 2px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  border-radius: 3px;
-  z-index: 10;
-  position: fixed;
-  top: 15px;
-  right: 15px;
-  background-color: #FFFFFF;
-}
+	width: 500px;
+	padding-left: 2px;
+	padding-right: 2px;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+	border-radius: 3px;
+	z-index: 10;
+	position: fixed;
+	top: 15px;
+	right: 15px;
+	background-color: #FFFFFF;
+	}
 
 .list-view {
-  font-size: 12px;
-  list-style: none;
-  width: 300px;
-  max-height: 500px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  text-align: center;
+	font-size: 12px;
+	list-style: none;
+	width: 300px;
+	max-height: 500px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	text-align: center;
 }
 
 .list-category,
@@ -234,3 +234,55 @@ body, html {
 	transition: 0.2s;
 	color: red;
 }
+
+.hamburger-menu {
+	z-index: 100;
+	position: fixed;
+	right: 30px;
+	top: 25px;
+	height: 35px;
+	width: 35px;
+}
+
+.listiew-toggle {
+	position: absolute;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	font-size: 16px;
+	padding: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
+	outline: 0;
+	border: 1px solid #1c5380;
+	font-weight: 200;
+	background: #1c5380;
+
+}
+
+.listiew-toggle:focus {
+    outline: 0;
+}
+
+.listiew-toggle .hamburger-bar {
+    display: block;
+    width: 23px;
+    height: 2px;
+    border-radius: 1px;
+    background-color: white;
+}
+
+.listiew-toggle .hamburger-bar + .hamburger-bar {
+    margin-top: 4px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
