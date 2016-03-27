@@ -381,3 +381,16 @@ function startMap(){
 	}, 2500);
 
 }
+
+// if (typeof google === 'undefined') {
+// 	$(".loading").css("display", "none");
+// } 
+
+/*
+* Called when google map is not loaded properly
+*/
+function googleError(){
+	document.querySelector(".loading").style.visibility = "hidden";
+	document.querySelector(".no-filtered-list").style.visibility = "hidden";
+	document.querySelector(".google-map-error").style.visibility = "visible";
+}
