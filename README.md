@@ -3,7 +3,7 @@
 
 <p><a href ="http://vascode.github.io/Neighbor-Map/">Demo</a></p>
 
-Information on this app:
+#Information on this app:
 - Default location is cleveland
 - Get data about popular places from Foursquare and show them as markers and list on the side
 - When items in list is clicked, corresponding marker is clicked and focus
@@ -16,6 +16,14 @@ Information on this app:
 -- phone number (if available)
 -- rating
 -- price (if available)
+
+#How to run this app: 
+1. Download or fork your application from https://github.com/vascode/Neighbor-Map
+2. Open index.html to start the app
+3. Use hamburger menu to hide/show list of places on right side
+4. Use filter box to filter places by name or type
+5. Select a map marker or item in list to open an info window for more details
+
 
 <h3>TODO:</h3>
 - Remove unnecessary functions and organize comments better than now
