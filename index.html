@@ -15,10 +15,7 @@
 
 	<body>
 		<!-- Map View -->
-		<div id="map"></div>
-
-		<!-- Search Bar -->
-		<!-- <input data-bind="value: searchTerm" id="pac-input" class="controls" type="text" placeholder="Set location to search popular places"> -->
+		<div id="map" class="my-map"></div>
 
 		<!-- Filter within search results -->
 		<form class="filterBox" data-bind="submit: filter">
@@ -37,7 +34,7 @@
 		<!-- List View -->
 		<div id="infolistBox">
 			<ul class="list-view collapse in" data-bind="foreach: filteredList">
-				<li data-bind="click: $root.gotoMarker">
+				<li class="list-view-li" data-bind="click: $root.gotoMarker">
 					<p class="list-name"><span data-bind="text: name"></span></p>
 					<p class="list-category"><span data-bind="text: category"></span></p>
 					<p class="list-address"><span data-bind="text:address"></span></p>

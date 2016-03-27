@@ -1,9 +1,10 @@
-body, html {
+body, 
+html {
     overflow-x: hidden;
     overflow-y: auto;
 }
 
-#map {
+.my-map {
 	/*width: 1500px;
 	height: 1400px;*/
 	display: block;
@@ -23,26 +24,6 @@ body, html {
 	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-
-#pac-input {
-	background-color: #fff;
-	font-family: Roboto;
-	font-size: 15px;
-	font-weight: 300;
-	margin-left: 12px;
-	padding: 0 11px 0 13px;
-	text-overflow: ellipsis;
-	width: 300px;
-}
-
-#pac-input:focus {
-	border-color: #4d90fe;
-}
-
-.pac-container {
-	font-family: Roboto;
-}
-
 .list-view {
 	background: #1c5380;
 	z-index: 10;
@@ -59,7 +40,7 @@ body, html {
 	color: white;
 }
 
-.list-view li {
+.list-view-li {
 	padding: 0 0 0 10px;
 	 /*padding: 10px;*/
 	/*position: relative;*/
