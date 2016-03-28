@@ -184,7 +184,7 @@ html {
 	right: 25px;
 	top: -20px;
 	background: #1c5380;
-	height: 50px;
+	height: 70px;
 	padding: 10px;
 	width: 370px;
 	text-align: center;
@@ -202,7 +202,7 @@ html {
 	right: 25px;
 	top: -20px;
 	background: #1c5380;
-	height: 50px;
+	height: 70px;
 	padding: 10px;
 	width: 370px;
 	text-align: center;
@@ -221,7 +221,7 @@ html {
 	right: 25px;
 	top: -20px;
 	background: #1c5380;
-	height: 50px;
+	height: 70px;
 	padding: 10px;
 	width: 370px;
 	text-align: center;
@@ -231,6 +231,25 @@ html {
 	margin-top: 100px;
 	transition: 0.2s;
 	color: red;
+}
+
+.fourSquare-message {
+	z-index: 13;
+	position: fixed;
+	right: 25px;
+	top: -20px;
+	background: #1c5380;
+	height: 70px;
+	padding: 10px;
+	width: 370px;
+	text-align: center;
+	font-size: 18px;
+	font-weight: 700;
+	border: 1px solid #ddd;
+	margin-top: 100px;
+	transition: 0.2s;
+	color: red;
+	/*visibility: hidden;*/
 }
 
 .hamburger-menu {
@@ -273,11 +292,14 @@ html {
     margin-top: 4px;
 }
 
+
 /* For small devices */
 @media only screen and (max-width : 400px) {
 	.list-view,
 	.loading,
-	.no-filtered-list {
+	.no-filtered-list,
+	.google-map-error,
+	.fourSquare-message {
 		width:280px; 
 	}
 
@@ -301,6 +323,7 @@ html {
 
 
 }
+
 
 
 

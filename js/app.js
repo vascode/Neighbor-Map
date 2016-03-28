@@ -6,7 +6,7 @@ var FOURSQURE_ID = CLIENT_ID + CLIENT_SECRET;
 var V_PARAMETER = "&v=20160307";
 
 /*
-* Place model. Upon recieving data from Foursquare, this constructor will be used to create data in format.
+* Venue model. Upon recieving data from Foursquare, this constructor will be used to create data in format.
 * @param {Object} item: A data from foursquare for Venue
 * return {void}
 */
@@ -21,8 +21,8 @@ var Venue = function(item){
 	this.address = item.venue.location.address + ', ' + item.venue.location.city + ', ' + item.venue.location.postalCode;
 	// this.formattedAddress = item.venue.location.formattedAddress;
 	this.category = item.venue.categories[0].name;
-	this.formattedPhone = item.venue.contact.formattedPhone;
-	this.url = item.venue.url;
+	this.formattedPhone = item.venue.contact.formattedPhone? item.venue.contact.formattedPhone : "No phone number";
+	this.url = item.venue.url? item.venue.url : "No website";
 	// this.hours = item.venue.hours.status;
 	// this.isOpen = this.getIsOpen(this);
 	// this.price = item.venue.price.tier;	//returns 1:"Cheap", 2:"Moderate", 3:"Expensive", 4:"Very expensive"
@@ -97,10 +97,11 @@ function AppViewModel(){
   	var placeLongitude;
   	var markerArray = [];
 
-  	self.venueArray = ko.observableArray('');	// Recommended places from foursquare
+  	self.venueArray = ko.observableArray();	// Recommended places from foursquare
   	self.filteredList = ko.observableArray(self.venueArray());	// Filtered list by filtering
   	self.searchTerm = ko.observable('');	// words to be used for search
   	self.keyword = ko.observable('');	//keyword to filter list view
+  	self.fourSquareMessage = ko.observable('');
 
 	// update the neighborhood
 	// self.computedNeighborhood = ko.computed(function() {
@@ -140,9 +141,14 @@ function AppViewModel(){
   			}
   		});
   		self.filteredList(listArray);
-  		// console.log(self.filteredList());
-  		// if(self.filteredList().length === 0){
-  		// 	$(".list-view").html("No matching result!");
+  		
+  		// if (self.filteredList().length === 0)
+  		// {
+  		// 	self.message("No matching result");
+  		// }
+  		// else {
+  		// 	self.message("");
+  		// 	$(".message-div").css("display", "none");
   		// }
   	});
 
@@ -285,12 +291,17 @@ function AppViewModel(){
   					map.fitBounds(mapBounds);
   				}
   			},
-  			complete: function(data) {
-  				if (self.venueArray().length === 0)
-  					$(".list-view").html('<h2 style=color:green>No result found. Search with different keywords<h2>');
-  			},
+  			// complete: function(data) {
+  			// 	if (self.venueArray().length === 0)
+  			// 		// $(".list-view").html('<h2 style=color:green>No result found. Search with different keywords<h2>');
+  			// 		console.log('No result found. Search with different keywords');
+  					
+  			// },
   			error: function(data) {
-  				$(".list-view").html('<h2 style=color:red>Failed to retrieve data from frousquare. Try again<h2>');
+  				// $(".list-view").html('<h2 style=color:red>Failed to retrieve data from frousquare. Try again<h2>');
+  				self.fourSquareMessage('Failed to retrieve data from Foursquare. Try again');
+  				console.log(self.fourSquareMessage());
+  				// alert("error");
   			}
   		});
   	}
@@ -377,7 +388,10 @@ function startMap(){
 	var appViewModel = new AppViewModel(); // define then bind AppViewModel
 	ko.applyBindings(appViewModel);
 	setTimeout(function(){
-		$(".loading").css("display", "none");
+		// $(".message-div").css("display", "none");
+		// $(".loading").css("display", "none");
+		$(".loading").css("visibility", "hidden");
+
 	}, 2500);
 
 }
