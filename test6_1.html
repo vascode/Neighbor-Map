@@ -1,0 +1,29 @@
+<!-- example:autocomplete with jquery  -->
+
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>jQuery UI Autocomplete functionality</title>
+      <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+      <!-- <script src="http://code.jquery.com/jquery-1.10.2.js"></script> -->
+      <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+      <!-- Javascript -->
+      <script>
+          ko.applyBindings({
+                 userName: ko.observable(""),        // Initially blank
+                 userPassword: ko.observable("abc")  // Prepopulate
+          });
+      </script>
+   </head>  
+   <body>
+      <!-- HTML -->
+      <div class="ui-widget">
+         <p>Type "a" or "s"</p>
+         <label for="automplete-1">Tags: </label>
+         <input id="automplete-1">
+      </div>
+   </body>
+</html>
