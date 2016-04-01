@@ -8,6 +8,7 @@
 - Get data about popular places from Foursquare and show them as markers and list on the side
 - When items in list is clicked, corresponding marker is clicked and focus
 - Filter box allow you to filter list of places by name or type
+- Autocomplete for Filter box
 - Map gets updated when resizing browswer window
 - Info Windows has following information:
 -- name of palce
