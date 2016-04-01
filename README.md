@@ -17,12 +17,13 @@
 -- rating
 -- price (if available)
 
-#How to run this app: 
+#How to run this app:
 1. Download or fork your application from https://github.com/vascode/Neighbor-Map
-2. Open index.html to start the app
-3. Use hamburger menu to hide/show list of places on right side
-4. Use filter box to filter places by name or type
-5. Select a map marker or item in list to open an info window for more details
+2. Open index.html in 'dist' folder to start the app
+3. Wait until loading page is done
+4. Use hamburger menu to hide/show list of places on right side
+5. Use filter box to filter places by name or type
+6. Select a map marker or item in list to open an info window for more details
 
 
 <h3>TODO:</h3>

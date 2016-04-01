@@ -412,7 +412,7 @@ function startMap(){
 		// $(".loading").css("display", "none");
 		$(".loading").css("visibility", "hidden");
 
-	}, 2500);
+	}, 3000);
 
 }
 
