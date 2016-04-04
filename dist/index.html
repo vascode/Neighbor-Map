@@ -1,59 +1,59 @@
-	<!DOCTYPE html>
-	<html>
-		<head>
-			<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-		    <meta charset="utf-8">
-		    <title>Google Neighbor Map</title>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	    <meta charset="utf-8">
+	    <title>Google Neighbor Map</title>
 
-			<link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
-		    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"> -->
-		    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-		    <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-			<link rel="stylesheet" href="css/style.min.css">
-		</head>
+		<link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+	    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"> -->
+	    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	    <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/style.min.css">
+	</head>
 
-		<body>
-			<!-- Map View -->
-			<div id="map" class="my-map"></div>
+	<body>
+		<!-- Map View -->
+		<div id="map" class="my-map"></div>
 
-			<!-- Filter within search results -->
-			<form class="filterBox" data-bind="submit: filter">
-				<input class="filter-bar" data-bind="value: keyword, valueUpdate: 'afterkeydown'" placeholder="Filter by name or type" autofocus>
-				<div class="autocomplete-result"></div>
-				<button class="filter-button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-			</form>
-			<div class="hamburger-menu">
-				<button type="button" class="listiew-toggle" data-toggle="collapse" data-target=".list-view">
-					<span class="hamburger-bar"></span>
-					<span class="hamburger-bar"></span>
-					<span class="hamburger-bar"></span>
-				</button>
-			</div>
+		<!-- Filter within search results -->
+		<form class="filterBox" data-bind="submit: filter">
+			<input class="filter-bar" data-bind="value: keyword, valueUpdate: 'afterkeydown'" placeholder="Filter by name or type" autofocus>
+			<div class="autocomplete-result"></div>
+			<button class="filter-button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+		</form>
+		<div class="hamburger-menu">
+			<button type="button" class="listiew-toggle" data-toggle="collapse" data-target=".list-view">
+				<span class="hamburger-bar"></span>
+				<span class="hamburger-bar"></span>
+				<span class="hamburger-bar"></span>
+			</button>
+		</div>
 
 
-			<!-- List View -->
-			<div id="infolistBox">
-				<ul class="list-view collapse in" data-bind="foreach: filteredList">
-					<li class="list-view-li" data-bind="click: $root.gotoMarker">
-						<p class="list-name"><span data-bind="text: name"></span></p>
-						<p class="list-category"><span data-bind="text: category"></span></p>
-						<p class="list-address"><span data-bind="text:address"></span></p>
-						<p class="list-phone"><span data-bind="text: formattedPhone"></span></p>
-					</li>
-				</ul>
-				<div class="loading">Loading...</div>
-				<div class="no-filtered-list" data-bind="visible: $root.filteredList().length === 0">No matching result</div>
-				<div class="google-map-error" style="display: none">Error occur while retrieving google map API</div>
-				<div class="fourSquare-message" data-bind = "visible: fourSquareMessage, text: fourSquareMessage"></div>
-			</div>
+		<!-- List View -->
+		<div id="infolistBox">
+			<ul class="list-view collapse in" data-bind="foreach: filteredList">
+				<li class="list-view-li" data-bind="click: $root.gotoMarker">
+					<p class="list-name"><span data-bind="text: name"></span></p>
+					<p class="list-category"><span data-bind="text: category"></span></p>
+					<p class="list-address"><span data-bind="text:address"></span></p>
+					<p class="list-phone"><span data-bind="text: formattedPhone"></span></p>
+				</li>
+			</ul>
+			<div class="loading">Loading...</div>
+			<div class="no-filtered-list" data-bind="visible: $root.filteredList().length === 0">No matching result</div>
+			<div class="google-map-error">Error occur while retrieving google map API</div>
+			<div class="fourSquare-message" data-bind = "visible: fourSquareMessage, text: fourSquareMessage"></div>
+		</div>
 
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-			<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-			<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+		<script src="js/app.min.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUfYIBdCGqiAIx6ktdssdK4OuIbfOwgGY&libraries=places&callback=startMap" onerror="googleError()" async defer></script>
+		
 
-			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUfYIBdCGqiAIx6ktdssdK4OuIbfOwgGY&libraries=places&callback=startMap" onerror="googleError()" async defer></script>
-			<script src="js/app.min.js"></script>
-
-		</body>
-	</html>
+	</body>
+</html>
