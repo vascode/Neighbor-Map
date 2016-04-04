@@ -212,7 +212,7 @@ html {
 	margin-top: 100px;
 	transition: 0.2s;
 	color: red;
-	/*visibility: hidden;*/
+	visibility: hidden;
 }
 
 .loading {

@@ -18,10 +18,13 @@ var Venue = function(item){
 	this.ratingColor = item.venue.ratingColor;
 	this.lat = item.venue.location.lat;	//latitude
 	this.lng = item.venue.location.lng;	//longitude
-	this.address = item.venue.location.address + ', ' + item.venue.location.city + ', ' + item.venue.location.postalCode;
+	this.address = item.venue.location.address + ', ' + 
+                item.venue.location.city + ', ' + 
+                item.venue.location.postalCode;
 	// this.formattedAddress = item.venue.location.formattedAddress;
 	this.category = item.venue.categories[0].name;
-	this.formattedPhone = item.venue.contact.formattedPhone? item.venue.contact.formattedPhone : "No phone number";
+	this.formattedPhone = item.venue.contact.formattedPhone? 
+                        item.venue.contact.formattedPhone : "No phone number";
 	this.url = item.venue.url? item.venue.url : "No website";
 	// this.hours = item.venue.hours.status;
 	// this.isOpen = this.getIsOpen(this);
@@ -35,7 +38,8 @@ var Venue = function(item){
 
 Venue.prototype = {
 	getPhoto: function(id){
-		var photoURL = "https://api.foursquare.com/v2/venues/" + id + "/photos?" + FOURSQURE_ID + V_PARAMETER;
+		var photoURL = "https://api.foursquare.com/v2/venues/" + id + "/photos?" + 
+                    FOURSQURE_ID + V_PARAMETER;
 
 		$.ajax({
 			url: photoURL,
@@ -276,7 +280,8 @@ function AppViewModel(){
   		var forusquareID = "client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET;
   		var coordinate = "&ll=" + placeLatitude +',' + placeLongitude;
   		var query = "&query="  + self.searchTerm();
-  		var foursquareURL = foursquareBaseURL + forusquareID + coordinate + query + V_PARAMETER  + "&venuePhotos=1";
+  		var foursquareURL = foursquareBaseURL + forusquareID + coordinate + 
+                          query + V_PARAMETER  + "&venuePhotos=1";
 
   		$.ajax({
   			url: foursquareURL,
