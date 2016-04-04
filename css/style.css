@@ -179,7 +179,7 @@ html {
 }
 
 .no-filtered-list {
-	z-index: 10;
+	z-index: 3;
 	position: fixed;
 	right: 25px;
 	top: -20px;
@@ -197,7 +197,7 @@ html {
 }
 
 .google-map-error {
-	z-index: 5;
+	z-index: 4;/* below .fourSquare-message */
 	position: fixed;
 	right: 25px;
 	top: -20px;
@@ -212,7 +212,7 @@ html {
 	margin-top: 100px;
 	transition: 0.2s;
 	color: red;
-	visibility: hidden;
+	/*visibility: hidden;*/
 }
 
 .loading {
@@ -234,7 +234,7 @@ html {
 }
 
 .fourSquare-message {
-	z-index: 13;
+	z-index: 5;
 	position: fixed;
 	right: 25px;
 	top: -20px;

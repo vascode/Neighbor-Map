@@ -271,7 +271,6 @@ function AppViewModel(){
   	*/
   	function getFoursquareData(){
 
-
   		// // Create URL to send asynchronous HTTP (Ajax) request
   		var foursquareBaseURL = "https://api.foursquare.com/v2/venues/explore?";
   		var forusquareID = "client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET;
@@ -314,7 +313,7 @@ function AppViewModel(){
   			error: function(data) {
   				// $(".list-view").html('<h2 style=color:red>Failed to retrieve data from frousquare. Try again<h2>');
   				self.fourSquareMessage('Failed to retrieve data from Foursquare. Try again');
-  				console.log(self.fourSquareMessage());
+  				// console.log(self.fourSquareMessage());
   				// alert("error");
   			}
   		});
@@ -426,5 +425,8 @@ function startMap(){
 function googleError(){
 	document.querySelector(".loading").style.visibility = "hidden";
 	document.querySelector(".no-filtered-list").style.visibility = "hidden";
+  document.querySelector(".fourSquare-message").style.visibility = "hidden";
 	document.querySelector(".google-map-error").style.visibility = "visible";
+
+  
 }

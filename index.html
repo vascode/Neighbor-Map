@@ -43,7 +43,7 @@
 			</ul>
 			<div class="loading">Loading...</div>
 			<div class="no-filtered-list" data-bind="visible: $root.filteredList().length === 0">No matching result</div>
-			<div class="google-map-error" style="display: none">Error occur while retrieving google map API</div>
+			<div class="google-map-error">Error occur while retrieving google map API</div>
 			<div class="fourSquare-message" data-bind = "visible: fourSquareMessage, text: fourSquareMessage"></div>
 		</div>
 
@@ -51,9 +51,9 @@
 		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
-
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUfYIBdCGqiAIx6ktdssdK4OuIbfOwgGY&libraries=places&callback=startMap" onerror="googleError()" async defer></script>
 		<script src="js/app.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUfYIBdCGqiAIx6ktdssdK4OuIbfOwgGY&libraries=places&callback=startMap" onerror="googleError()" async defer></script>
+		
 
 	</body>
 </html>
